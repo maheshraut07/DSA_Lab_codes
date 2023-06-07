@@ -1,0 +1,82 @@
+#include<iostream>
+using namespace std;
+string iden[20];
+float p[20],q[20],w[20][20],c[20][20];
+int r[20][20],n;
+void con(){
+    for(int i =0; i<=n; i++){
+        c[i][i] = 0.0;
+        w[i][i] = q[i];
+        r[i][i] = 0; 
+        
+    }
+    for( int i = 1; i<=n; i++){
+        for(int j = 0; j<=n-i; j++){
+            w[j][j+i] = q[j+i]+ p[j+i]+ w[j][j+i-1];
+            c[j][j+i] = 9999;
+            for( int k=j+1 ; k<=j+i; k++){
+                if(c[j][j+i] > (c[j][k-1]+c[k][j+i])){
+                    c[j][j+i] = c[j][k-1]+c[k][j+i];
+                    r[j][j+i] = k;
+                }
+            }
+            
+            c[j][j+i] += w[j][j+i];
+            
+        }
+        cout<<endl;
+    }
+    cout<<w[0][n]<<endl;
+    cout<<c[0][n]<<endl;
+    cout<<r[0][n]<<endl;
+    
+    
+}
+void print(int l1,int r1)
+  {
+	if(l1>=r1)
+		return;
+	if(r[l1][r[l1][r1]-1]!=0)
+		// cout<<"\n Left child of "<<r[l1][r1]<<" :: "<<r[l1][r[l1][r1]-1];
+        cout<<iden[l1][r[l1][r1]-1];
+	if(r[r[l1][r1]][r1]!=0)
+		// cout<<"\n Right child of "<<r[l1][r1]<<" :: "<<r[r[l1][r1]][r1];
+        cout<<iden[r[l1][r1]][r1];
+	print(l1,r[l1][r1]-1);
+	print(r[l1][r1],r1);
+	return;
+}
+// void print(int i, int j)
+// {
+//     if (i < j)
+//     {
+//         cout << "\n"
+//              << iden[r[i][j]];
+//     }
+//     else
+//         return;
+//     print(i, r[i][j] - 1);
+//     print(r[i][j], j);
+// }
+
+int main(){
+    string iden[20];
+    cout<<"Enter the number  of nodes : "<<endl;
+    cin>>n;
+    cout<<"enter the identifiers :"<<endl;
+    for(int i = 0; i<n; i++){
+        cin>>iden[i];
+    }
+    cout<<"eneter the succesful transaction:"<<endl;
+    for(int i = 1; i <= n; i++){
+        cin>>p[i];
+    }
+    cout<<"eneter the unsuccesful transaction:"<<endl;
+    for(int i = 0; i <= n; i++){
+        cin>>q[i];
+    }
+    con();
+    print(0,n);
+    
+    return 0;
+}

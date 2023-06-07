@@ -1,0 +1,71 @@
+#include<iostream>
+using namespace std;
+
+struct node{
+    char name[20];
+    int count;
+    struct node *child[20];
+
+}*root;
+
+class tree{
+    public:
+    tree(){
+        root = NULL;
+    }
+
+    void create(){
+        root = new node();
+        cout << "\nEnter the name of the book: ";
+        cin >> root -> name;
+        cout << "\n Enter the number of chapters: ";
+        cin >> root -> count;
+
+        for ( int i = 0; i < root -> count; i++){
+            root -> child[i] = new node();
+            cout << "\n Enter the name of the chapters : ";
+            cin >> root -> child[i] -> name;
+            cout <<"\nEnter the number of sections : ";
+            cin >> root -> child[i] -> count;
+
+            for ( int j = 0; j < root -> child [i] -> count; j++){
+                root -> child[i] -> child[j] = new node();
+                cout << "\nEnter the name  of sections : ";
+                cin >> root -> child[i] -> child[j] -> name;
+                cout << "\nEnter the number of subsections: ";
+                cin >> root -> child[i] -> child[j] -> count;
+
+                for(int k = 0; k < root -> child[i] -> child[j] -> count; k++){
+                     root -> child[i] -> child[j] -> child[k] = new node();
+                    cout << "\nEnter the name of the subsections: ";
+                    cin >> root -> child[i] -> child[j] -> child[k] -> name;
+                }
+            }
+        }
+    }
+
+    void display(){
+        int j;
+        cout <<"\n***********Welcome to BookStore**********";
+        cout <<"\nthe name of the book : "<< root -> name;
+        cout <<"\nNUmber of chapters : " << root -> count;
+
+        for ( int i = 0; i < root -> count; i++){
+            cout << "\n chpaters name are : "<< root -> child [i] -> name;
+
+            for( int j = 0; j < root -> child[i] -> count; j++){
+                cout << " \nThe name of the sections are : "<< root -> child[i] -> child[j] -> name ;
+            }
+
+            for ( int k = 0; k < root -> child[i] -> child[j] -> count; k++){
+                cout << "\n the name of the subsections are : "<< root -> child[i] -> child[j] -> child[k] -> name;
+            }
+        }
+    }
+};
+
+int main(){
+    tree t; 
+    t.create();
+    t.display();
+}
